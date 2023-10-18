@@ -26,4 +26,8 @@ Save this file as /etc/systemd/system/myscript.service. Then, reload systemd and
 
 sudo systemctl daemon-reload
 sudo systemctl enable myscript.service
+
+Start your service:
+sudo systemctl start myscript.service
+
 The next time you reboot your system, systemd will run your script.
