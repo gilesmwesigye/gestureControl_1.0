@@ -1,32 +1,29 @@
 # gestureControl_1.0
- 
+Making Script Executable
 chmod +x disable_sleep.sh
 
-Create a systemd service file for your script. Create a new file with a .service extension, for example, disable_sleep.service, and open it in a text editor:
 
-sudo nano /etc/systemd/system/disable_sleep.service
+Running Script on boot
+Method 1: Using systemd
 
-Add the following content to the disable_sleep.service file:
+systemd is the init system used by Ubuntu and most other modern Linux distributions. It provides a powerful and flexible way to manage services and other system tasks, including running scripts on boot.
+
+To run a script on boot using systemd, you'll need to create a systemd service unit file. This file tells systemd how to run your script, including when to run it and what user to run it as.
+
+Here's an example of a systemd service unit file for a script called disable_sleep.sh:
 
 [Unit]
-Description=Disable Sleep Service
+Description=My Script
 After=network.target
 
 [Service]
-ExecStart=/path/to/disable_sleep.sh
-StandardOutput=null
+Type=simple
+ExecStart=/path/to/myscript.sh
 
 [Install]
-WantedBy=default.target
-
-Replace /path/to/disable_sleep.sh with the actual path to your disable_sleep.sh script.
-
-Save the file and exit the text editor.
-
-Reload the systemd manager configuration:
+WantedBy=multi-user.target
+Save this file as /etc/systemd/system/myscript.service. Then, reload systemd and enable the service:
 
 sudo systemctl daemon-reload
-
-Enable the service to run on boot:
-
-sudo systemctl enable disable_sleep.service
+sudo systemctl enable myscript.service
+The next time you reboot your system, systemd will run your script.
